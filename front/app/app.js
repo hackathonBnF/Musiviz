@@ -8,7 +8,9 @@ angular.module('musivizApp', [
     'ngCookies',
     'musiviz',
     'musiviz.home',
-    'musiviz.discover'
+    'musiviz.discover',
+    'musiviz.search',
+    'musivic.service.record'
 ]).
 config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider) {
   $locationProvider.hashPrefix('!');

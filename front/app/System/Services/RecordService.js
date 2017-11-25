@@ -1,23 +1,24 @@
 'use strict';
 
-angular.module('transcript.service.app', ['ui.router'])
+angular.module('musivic.service.record', ['ui.router'])
 
-    .service('AppService', function($http, $rootScope) {
+    .service('RecordService', function($http, $rootScope) {
         return {
-            getPreference: function() {
+            getRecords: function() {
                 return $http.get(
-                    $rootScope.api+"/app-preference"
+                    $rootScope.api+"/"
                 ).then(function(response) {
-                    return response.data[0];
+                    return response.data;
                 }, function errorCallback(response) {
                     console.log(response);
                     return response;
                 });
             },
-            patchPreference: function(id,data) {
-                return $http.patch($rootScope.api+"/app-preference/"+id, data).
-                then(function(response) {
-                    return response;
+            getRecord: function() {
+                return $http.get(
+                    $rootScope.api+"/"
+                ).then(function(response) {
+                    return response.data;
                 }, function errorCallback(response) {
                     console.log(response);
                     return response;

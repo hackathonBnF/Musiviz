@@ -10,11 +10,16 @@ angular.module('musiviz.search', ['ui.router'])
                     controller: 'AppSearchCtrl'
                 }
             },
-            url: '/search'
+            url: '/search/:keywords',
+            resolve: {
+                records: function(RecordService) {
+                    return RecordService.getRecords();
+                }
+            }
         })
     }])
 
-    .controller('AppSearchCtrl', ['$rootScope','$scope', '$http', '$sce', '$state', function($rootScope, $scope, $http, $sce, $state) {
+    .controller('AppSearchCtrl', ['$rootScope','$scope', '$http', '$sce', '$state', 'records', function($rootScope, $scope, $http, $sce, $state, records) {
 
     }])
 ;

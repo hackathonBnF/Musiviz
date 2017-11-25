@@ -12,10 +12,6 @@ angular.module('musiviz', ['ui.router'])
                 "navbar" : {
                     templateUrl: 'System/Navbar/Navbar.html',
                     //controller: 'TranscriptCtrl'
-                },
-                "footer" : {
-                    templateUrl: 'System/Footer/Footer.html',
-                    //controller: 'TranscriptCtrl'
                 }
             },
             url: ''
