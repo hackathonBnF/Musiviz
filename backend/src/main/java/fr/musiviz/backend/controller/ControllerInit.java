@@ -1,8 +1,10 @@
 package fr.musiviz.backend.controller;
 
 import fr.musiviz.backend.db.entity.AudioRecord;
+import fr.musiviz.backend.db.entity.Creator;
 import fr.musiviz.backend.db.entity.Image;
 import fr.musiviz.backend.db.repository.RepoAudioRecord;
+import fr.musiviz.backend.db.repository.RepoCreator;
 import fr.musiviz.backend.db.repository.RepoImage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,7 +17,10 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 /**
@@ -31,14 +36,17 @@ public class ControllerInit {
     @Autowired
     RepoImage repoImage;
 
+    @Autowired
+    RepoCreator repoCreator;
+
     @Value("${mv.csv.base}")
     private String csvBase;
 
     private String strip(String s) {
         if(s.length() >= 255) {
-            return s.substring(0, 255);
+            s = s.substring(0, 255);
         }
-        return s;
+        return s.replaceAll("\\\\", "");
     }
 
     @PostConstruct
@@ -74,6 +82,8 @@ public class ControllerInit {
                     .map(a -> {
                         AudioRecord ar = new AudioRecord();
 
+                        String ark = strip(a[0]);
+
                         ar.setArk(strip(a[0]));
                         ar.setTitle(strip(a[1]));
                         ar.setYear(strip(a[2]));
@@ -88,6 +98,28 @@ public class ControllerInit {
 
             list.forEach(ar -> {
                 repoAudioRecord.save(ar);
+
+                //add creator reference
+                Arrays.asList(ar.getCreators().split("\\|")).forEach(c -> {
+
+                    Pattern p = Pattern.compile("(.+)(\\(.+\\))\\.(.+)");
+                    Matcher m = p.matcher(c);
+
+                    if(m.matches()) {
+                        String name = m.group(1);
+                        String date = m.group(2);
+                        String role = m.group(3);
+
+                        Creator creator = new Creator();
+                        creator.setAudioRecord(ar);
+                        creator.setName(name);
+                        creator.setRole(role);
+                        creator.setDate(date);
+                        repoCreator.save(creator);
+                    }
+
+                });
+
             });
 
             System.out.println("Loaded");
