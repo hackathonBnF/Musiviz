@@ -4,6 +4,22 @@
             <div class="col-md-12">
                 <strong>Ma recherche initiale :</strong>
                 <p>{{ searchQuery }}</p>
+                <p class="text-muted" style="font-size: 80%;">Attention, dans ce prototype, la recherche ne fonctionne pas. Il s'agit uniquement d'une représentation visuelle reprenant l'interface de Gallica <i class="fa fa-smile-o"></i>.</p>
+            </div>
+        </div>
+        <br />
+        <div class="bg-color-content row">
+            <div class="col-md-12" style="font-size: 80%;">
+                <strong>Comprendre notre prototype :</strong>
+                <p class="text-muted">Nous avons cherché à représenter des éléments signifiants de pistes sonores à gauche de chaque résultat :</p>
+                <ul class="text-muted">
+                    <li>La taille de la bulle indique le nombre de ressources associées</li>
+                    <li>L'année est celle de la publication</li>
+                    <li>Ensuite vient la durée de l'enregistrement</li>
+                    <li>Vient ensuite le nombre de BPM indiquant approximativement le tempo</li>
+                    <li>Enfin, le "+" déroule la liste des premières ressources associées</li>
+                </ul>
+                <p class="text-muted">Vous pouvez également voir un spectrogramme qui vous permettra notamment de repérer des morceaux à schéma identique, ou des pistes de plus ou moins bonne qualité sonore.</p>
             </div>
         </div>
     </aside>
@@ -11,7 +27,7 @@
         <div class="bg-color-content row">
             <div class="col-md-12" ng-repeat="record in records">
                 <article class="result-line row">
-                    <div class="bg-light col col-md-1 text-center align-self-end" style="heigth: 100%; padding: 0;">
+                    <div class="bg-light col col-md-1 text-center align-self-end" style="height: 100%; padding: 0;">
                         <div class="bg-light align-self-end">
                             <div class="bg-light text-center" style="padding: 2px;"><span data-toggle="tooltip" data-placement="top" title="indique le nombre de ressources associées"><i class="fa fa-circle" ng-class="faResources(record.imageCount)"></i></span></div>
                             <div class="bg-light text-center" style="padding: 2px;"><small data-toggle="tooltip" data-placement="top" title="Date de publication">{{ record.audioRecord.year }}</small></div>

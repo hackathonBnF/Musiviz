@@ -5,7 +5,7 @@
     </a>
     <form class="form-inline">
         <input class="form-control mr-sm-2" type="search" placeholder="Rechercher" aria-label="Rechercher" ng-model="searchQuery" />
-        <a class="btn my-2 my-sm-0" ng-class="{'btn-outline-primary': searchQuery === '', 'btn-outline-success': searchQuery !== ''}" ui-sref="musiviz.search({searchQuery: searchQuery})"><i class="fa fa-search"></i></a>
+        <a class="btn my-2 my-sm-0" ng-class="{'btn-outline-primary': searchQuery === '', 'btn-outline-success': searchQuery !== ''}" ui-sref="musiviz.search({searchQuery: searchQuery})"><i class="fa fa-search"></i></a> &nbsp; <a ui-sref="musiviz.search({searchQuery: 'tout'})" class="text-muted">Tous les résultats</a>
     </form>
     <div class="navbar-nav">
         <a class="nav-item nav-link" ui-sref="musiviz.discover">Découvrir</a>
