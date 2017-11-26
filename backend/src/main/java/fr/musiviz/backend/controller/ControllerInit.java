@@ -46,6 +46,9 @@ public class ControllerInit {
     @Value("${mv.csv.base}")
     private String csvBase;
 
+    @Value("${mv.spectrum.url}")
+    private String spectrumUrlBase;
+
     private String strip(String s) {
         if(s.length() >= 255) {
             s = s.substring(0, 255);
@@ -59,6 +62,7 @@ public class ControllerInit {
         //loadDataAudioRecord("audio_record_extract1_100.csv");
         loadDataAudioRecord("audio_record_extract2.csv");
         loadDataImage("image_extract1_6arks.csv");
+        loadDataMetaData("metadata_extract2.csv");
 
 //        AudioRecord ar = repoAudioRecord.findOne(new Long(26));
 //
@@ -137,13 +141,13 @@ public class ControllerInit {
                 });
 
                 //add audio meta
-                AudioMetaData amt = new AudioMetaData();
-                amt.setAudioRecord(ar);
-                amt.setBpm(Integer.toString(ThreadLocalRandom.current().nextInt(50, 150)));
-                amt.setNoise(Integer.toString(ThreadLocalRandom.current().nextInt(15, 99)));
-                amt.setDuration(Integer.toString(ThreadLocalRandom.current().nextInt(80, 400)));
-                amt.setUrlSpectrum("http://www.mp3-tech.org/tests/pm/RefCdAudioS.gif");
-                repoAudioMetaData.save(amt);
+//                AudioMetaData amt = new AudioMetaData();
+//                amt.setAudioRecord(ar);
+//                amt.setBpm(Integer.toString(ThreadLocalRandom.current().nextInt(50, 150)));
+//                amt.setNoise(Integer.toString(ThreadLocalRandom.current().nextInt(15, 99)));
+//                amt.setDuration(Integer.toString(ThreadLocalRandom.current().nextInt(80, 400)));
+//                amt.setUrlSpectrum("http://www.mp3-tech.org/tests/pm/RefCdAudioS.gif");
+//                repoAudioMetaData.save(amt);
             });
 
 
@@ -174,7 +178,12 @@ public class ControllerInit {
                         i.setAudioRecord(ar);
                         i.setUrl(a[1]);
                         i.setOriginArk(ark);
-                        i.setTitle(a[2]);
+                        String title = a[2];
+                        if(title.startsWith("http://commons.wikimedia.org")) {
+                            i.setTitle("");
+                        } else {
+                            i.setTitle(a[2]);
+                        }
 
                         return i;
                     })
@@ -184,6 +193,46 @@ public class ControllerInit {
 
             list.forEach(i -> {
                 repoImage.save(i);
+            });
+
+            System.out.println("Loaded");
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("ERROR " + e.getMessage());
+        }
+    }
+
+    public void loadDataMetaData(String filename) {
+
+        System.out.println("> Load csv " + filename);
+
+        Path path = Paths.get(csvBase, filename);
+
+        try (BufferedReader reader = Files.newBufferedReader(path)) {
+            List<AudioMetaData> list = reader.lines()
+                    .map(l -> l.split(","))
+                    .map(a -> {
+
+                        String ark = a[0];
+                        String arkShort = ark.replaceAll("ark:/12148/", "");
+                        AudioRecord ar = repoAudioRecord.findByArk(ark);
+
+                        AudioMetaData amt = new AudioMetaData();
+                        amt.setAudioRecord(ar);
+                        amt.setBpm(a[1]);
+                        amt.setNoise(Integer.toString(ThreadLocalRandom.current().nextInt(15, 99)));
+                        amt.setDuration(a[2]);
+                        amt.setUrlSpectrum(spectrumUrlBase + "/" + arkShort + ".jpg");
+                        repoAudioMetaData.save(amt);
+
+                        return amt;
+                    })
+                    .collect(Collectors.toList());
+
+            System.out.println("Items to load " + list.size());
+
+            list.forEach(i -> {
+                repoAudioMetaData.save(i);
             });
 
             System.out.println("Loaded");

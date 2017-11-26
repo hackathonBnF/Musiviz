@@ -13,6 +13,8 @@ public class Image {
     private String title;
     private String url;
     private String originArk;
+    //yes more ugly
+    private boolean isPartition;
     private AudioRecord audioRecord;
 
     public Image() {
@@ -60,5 +62,13 @@ public class Image {
 
     public void setOriginArk(String originArk) {
         this.originArk = originArk;
+    }
+
+    public boolean isPartition() {
+        return isPartition;
+    }
+
+    public void setPartition(boolean partition) {
+        isPartition = partition;
     }
 }
