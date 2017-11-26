@@ -10,6 +10,7 @@ import javax.persistence.*;
 @Entity
 public class Image {
     private Long id;
+    private String title;
     private String url;
     private String originArk;
     private AudioRecord audioRecord;
@@ -33,6 +34,14 @@ public class Image {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     @JsonIgnore

@@ -166,6 +166,7 @@ public class ControllerInit {
                         i.setAudioRecord(ar);
                         i.setUrl(a[1]);
                         i.setOriginArk(ark);
+                        i.setTitle("Fake title " + ark);
 
                         return i;
                     })
