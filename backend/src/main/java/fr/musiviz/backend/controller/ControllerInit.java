@@ -61,7 +61,7 @@ public class ControllerInit {
         System.out.println("--- INIT ---");
         //loadDataAudioRecord("audio_record_extract1_100.csv");
         loadDataAudioRecord("audio_record_extract2.csv");
-        loadDataImage("image_extract1_6arks.csv");
+        loadDataImage("image_extract1_6arks_hd_partitions.csv");
         loadDataMetaData("metadata_extract2.csv");
 
 //        AudioRecord ar = repoAudioRecord.findOne(new Long(26));
@@ -182,7 +182,15 @@ public class ControllerInit {
                         if(title.startsWith("http://commons.wikimedia.org")) {
                             i.setTitle("");
                         } else {
-                            i.setTitle(a[2]);
+                            i.setTitle(strip(a[2]));
+                        }
+
+                        String strPartition = a[3];
+                        if(strPartition.equals("1")) {
+                            System.out.println("----- PARTITION " + ar.getArk());
+                            i.setPartition(true);
+                        } else {
+                            i.setPartition(false);
                         }
 
                         return i;

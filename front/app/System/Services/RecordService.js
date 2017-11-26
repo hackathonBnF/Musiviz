@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('musivic.service.record', ['ui.router'])
+angular.module('musiviz.service.record', ['ui.router'])
 
     .service('RecordService', function($http, $rootScope) {
         return {
@@ -26,9 +26,31 @@ angular.module('musivic.service.record', ['ui.router'])
                     return response;
                 });
             },
-            getByAudioRecord: function(id) {
+            getImages: function(id) {
                 return $http.get(
                     $rootScope.api+"image/getByAudioRecord/"+id
+                ).then(function(response) {
+                    console.log(response);
+                    return response.data;
+                }, function errorCallback(response) {
+                    console.log(response);
+                    return response;
+                });
+            },
+            getCreators: function(id) {
+                return $http.get(
+                    $rootScope.api+"creator/getByAudioRecord/"+id
+                ).then(function(response) {
+                    console.log(response);
+                    return response.data;
+                }, function errorCallback(response) {
+                    console.log(response);
+                    return response;
+                });
+            },
+            getGenres: function(id) {
+                return $http.get(
+                    $rootScope.api+"genre/getByAudioRecord/"+id
                 ).then(function(response) {
                     console.log(response);
                     return response.data;

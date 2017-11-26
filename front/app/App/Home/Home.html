@@ -1,11 +1,16 @@
 <main>
     <div class="jumbotron">
-        <h1 class="display-3">Hello, world!</h1>
-        <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
+        <h1 class="display-3">Bienvenue sur MusiViz</h1>
+        <p class="lead">L’interface MusiViz propose une accroche visuelle à un enregistrement sonore. Il offre de même un regroupement des sources connexes à l’oeuvre disponibles sur Gallica.</p>
         <hr class="my-4">
-        <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
-        <p class="lead">
-            <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
-        </p>
+        <p>Notre prototype se focalise particulièrement sur l'affichage des résultats sonores dans le cadre d'une recherche (<a ui-sref="musiviz.search({searchQuery: 'tout'})">à consulter ici</a>). L'autre aspect de notre prototype est de repenser la page d'une entrée sonore dans Gallica. À ce titre, nous vous conseillons également de consulter les notices suivantes :</p>
+        <ul>
+            <li><a ui-sref="musiviz.result({id: 1})">Pelléas et Mélisande, composé par Debussy</a></li>
+            <li><a ui-sref="musiviz.result({id: 2})">Priere pour nos enemies, déclamé par Sarah Bernhardt</a></li>
+            <li><a ui-sref="musiviz.result({id: 3})">Le Régiment de Sambre et Meuse, chanté par Enrico Caruso</a></li>
+            <li><a ui-sref="musiviz.result({id: 4})">Le Boléro de Ravel</a></li>
+        </ul>
+        <hr class="my-4">
+        <p>Ce prototype été réalisé dans le cadre du Hackathon de la BNF du 25 et 26 novembre 2017 par une équipe constituée de : Anthony, Bastien, Bénédicte, Florian, Jordan, Karl, Marc, Marc-Thimothée, Paul et Philippe.</p>
     </div>
 </main>
