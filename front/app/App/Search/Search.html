@@ -16,7 +16,7 @@
                     <li>La taille de la bulle indique le nombre de ressources associées</li>
                     <li>L'année est celle de la publication</li>
                     <li>Ensuite vient la durée de l'enregistrement</li>
-                    <li>Vient ensuite le nombre de BPM indiquant approximativement le tempo</li>
+                    <li>Puis le nombre de BPM indiquant approximativement le tempo</li>
                     <li>Enfin, le "+" déroule la liste des premières ressources associées</li>
                 </ul>
                 <p class="text-muted">Vous pouvez également voir un spectrogramme qui vous permettra notamment de repérer des morceaux à schéma identique, ou des pistes de plus ou moins bonne qualité sonore.</p>
@@ -29,7 +29,7 @@
                 <article class="result-line row">
                     <div class="bg-light col col-md-1 text-center align-self-end" style="height: 100%; padding: 0;">
                         <div class="bg-light align-self-end">
-                            <div class="bg-light text-center" style="padding: 2px;"><span data-toggle="tooltip" data-placement="top" title="indique le nombre de ressources associées"><i class="fa fa-circle" ng-class="faResources(record.imageCount)"></i></span></div>
+                            <div class="bg-light text-center" style="padding: 2px;"><span data-toggle="tooltip" data-placement="top" title="Il y a {{ record.imageCount }} ressources associées"><i class="fa fa-circle" ng-class="faResources(record.imageCount)"></i></span></div>
                             <div class="bg-light text-center" style="padding: 2px;"><small data-toggle="tooltip" data-placement="top" title="Date de publication">{{ record.audioRecord.year }}</small></div>
                             <div class="bg-light text-center" style="padding: 2px;"><small data-toggle="tooltip" data-placement="top" title="Durée de la piste">{{ record.audioMetaData.duration | seconds }}</small></div>
                             <div class="bg-light text-center" ng-class="colorNoise(record.audioMetaData.noise)" style="padding: 2px;"><span data-toggle="tooltip" data-placement="top" title="Qualité du son"><i class="fa" ng-class="faNoise(record.audioMetaData.noise)"></i></span></div>
