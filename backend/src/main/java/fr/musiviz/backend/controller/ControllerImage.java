@@ -1,5 +1,6 @@
 package fr.musiviz.backend.controller;
 
+import fr.musiviz.backend.data.response.ResponseImageList;
 import fr.musiviz.backend.db.entity.AudioRecord;
 import fr.musiviz.backend.db.entity.Image;
 import fr.musiviz.backend.db.repository.RepoAudioRecord;
@@ -33,18 +34,26 @@ public class ControllerImage {
     }
 
     @RequestMapping(value="/getByAudioRecord/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<Image>> getByAudioRecord(@PathVariable Long id) {
+    public ResponseEntity<ResponseImageList> getByAudioRecord(@PathVariable Long id) {
 
         AudioRecord audioRecord = repoAudioRecord.findOne(id);
         List<Image> list = repoImage.getByAudioRecord(audioRecord);
 
-        return ResponseEntity.ok(list);
+        ResponseImageList responseImageList = ResponseImageList.init()
+            .withCount(list.size())
+            .withListImage(list);
+
+        return ResponseEntity.ok(responseImageList);
     }
 
     @RequestMapping(value="/getByArk/{ark}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<Image>> getByArk(@PathVariable String ark) {
+    public ResponseEntity<ResponseImageList> getByArk(@PathVariable String ark) {
         List<Image> list = repoImage.getByOriginArk("ark:/12148/" + ark);
 
-        return ResponseEntity.ok(list);
+        ResponseImageList responseImageList = ResponseImageList.init()
+                .withCount(list.size())
+                .withListImage(list);
+
+        return ResponseEntity.ok(responseImageList);
     }
 }
