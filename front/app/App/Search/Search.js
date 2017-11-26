@@ -19,42 +19,64 @@ angular.module('musiviz.search', ['ui.router'])
         })
     }])
 
-    .controller('AppSearchCtrl', ['$rootScope','$scope', '$http', '$sce', '$state', 'records', '$transition$', function($rootScope, $scope, $http, $sce, $state, records, $transition$) {
+    .controller('AppSearchCtrl', ['$rootScope','$scope', '$http', '$sce', '$state', 'records', '$transition$', 'RecordService', function($rootScope, $scope, $http, $sce, $state, records, $transition$, RecordService) {
         $rootScope.searchQuery = $transition$.params().searchQuery;
         $scope.records = records;
+        $scope.displayThumbnailsValue = null;
+        $scope.displayThumbnailsList = [];
 
-        for(var iR in $scope.records) {
-            var record = $scope.records[iR];
-
-            record.noise = parseInt(Math.random()*100);
-
-            record.associateResources = parseInt(Math.random()*100);
-
-            record.bpm = parseInt(Math.random()*1000);
-        }
-
-
-        $scope.dotColor = function(value) {
-            if (value < 25) {
-                return "text-success";
-            } else if (value >= 25 && value < 50) {
-                return "text-info";
-            } else if (value >= 50 && value < 75) {
-                return "text-danger";
-            } else if (value >= 75) {
-                return "text-warning";
+        $scope.displayThumbnails = function(value) {
+            console.log(value);
+            if(value === null) {
+                $scope.displayThumbnailsValue = null;
+            } else {
+                $http.get($rootScope.api+"image/getByAudioRecord/"+value
+                ).then(function (response) {
+                    console.log(response.data);
+                    $scope.displayThumbnailsValue = value;
+                    $scope.displayThumbnailsList = response.data;
+                    console.log($scope.displayThumbnailsList);
+                });
             }
         };
 
-        $scope.dotSize = function(value) {
-            if (value < 25) {
+        $scope.faResources = function(value) {
+            if (value < 5) {
                 return "fa-1x";
-            } else if (value >= 25 && value < 50) {
+            } else if (value >= 5 && value < 30) {
                 return "fa-2x";
-            } else if (value >= 50 && value < 75) {
-                return "fa-3x";
+            } else if (value >= 30 && value < 75) {
+                return "fa-2x";
             } else if (value >= 75) {
-                return "fa-4x";
+                return "fa-3x";
+            }
+        };
+
+        $scope.faNoise = function(value) {
+            if (value < 80) {
+                return "fa-battery-0";
+            } else if (value >= 60 && value < 80) {
+                return "fa-battery-1";
+            } else if (value >= 40 && value < 60) {
+                return "fa-battery-2";
+            } else if (value >= 20 && value < 40) {
+                return "fa-battery-3";
+            } else if (value >= 20) {
+                return "fa-battery-4";
+            }
+        };
+
+        $scope.colorNoise = function(value) {
+            if (value < 80) {
+                return "text-danger";
+            } else if (value >= 60 && value < 80) {
+                return "text-warning";
+            } else if (value >= 40 && value < 60) {
+                return "text-warning";
+            } else if (value >= 20 && value < 40) {
+                return "text-primary";
+            } else if (value >= 20) {
+                return "text-primary";
             }
         };
     }])

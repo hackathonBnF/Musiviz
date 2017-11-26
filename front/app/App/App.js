@@ -18,7 +18,12 @@ angular.module('musiviz', ['ui.router'])
         })
     }])
 
-    .controller('AppCtrl', ['$rootScope','$scope', '$http', '$sce', '$state', function($rootScope, $scope, $http, $sce, $state) {
+    .controller('AppCtrl', ['$rootScope','$scope', '$http', '$sce', '$state', '$transition$', function($rootScope, $scope, $http, $sce, $state, $transition$) {
+        console.log($transition$);
 
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+            $('[data-toggle="popover"]').popover();
+        })
     }])
 ;

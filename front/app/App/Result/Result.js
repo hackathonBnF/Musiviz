@@ -16,33 +16,38 @@ angular.module('musiviz.result', ['ui.router'])
                     return RecordService.getRecord($transition$.params().id);
                 },
                 images: function(RecordService, $transition$) {
-                    return RecordService.getByAudioRecord($transition$.params().id);
+                    return RecordService.getImages($transition$.params().id);
+                },
+                creators: function(RecordService, $transition$) {
+                    return RecordService.getCreators($transition$.params().id);
+                },
+                genres: function(RecordService, $transition$) {
+                    return RecordService.getGenres($transition$.params().id);
                 }
             }
         })
     }])
 
-    .controller('AppResultCtrl', ['$rootScope','$scope', '$http', '$sce', '$state', '$timeout', 'record', 'images', function($rootScope, $scope, $http, $sce, $state, $timeout, record, images) {
+    .controller('AppResultCtrl', ['$rootScope','$scope', '$http', '$sce', '$state', '$timeout', 'record', 'images', 'creators', 'genres', function($rootScope, $scope, $http, $sce, $state, $timeout, record, images, creators, genres) {
+        $('.carousel').carousel({
+            interval: 4000
+        });
+
         $scope.record = record;
+        $scope.creators = creators;
+        $scope.genres = genres;
         $scope.mediaContainer = "";
         $scope.images = images.listImage;
         $scope.nbResult = images.count;
-
-        $timeout( function() {
-                var imageContainer = $scope.images.listImage[iI];
-                $scope.mediaContainer = "<img src=\""+imageContainer.url+"\" class='img-fluid' style='max-height: 300px;' />";
-            }, 5000);
-
-        function updateMediaContainer() {
-            $timeout(updateMediaContainer, 5000);
-        };
+        $scope.arks = $scope.record.audioRecord.ark.split('/');
+        $scope.audio = $scope.arks[$scope.arks.length-1];
 
         var wavesurfer = Object.create(WaveSurfer);
         $scope.wavesurfer = wavesurfer;
         wavesurfer.init({
             container: '#waveform',
-            waveColor: 'violet',
-            progressColor: 'purple',
+            waveColor: '#3497db',
+            progressColor: '#2980b9',
             minPxPerSec: 20,
             scrollParent: true
         });
@@ -54,7 +59,7 @@ angular.module('musiviz.result', ['ui.router'])
                 container: "#wave-spectrogram"
             });
         });
-        wavesurfer.load('web/audio/test.mp3');
+        wavesurfer.load('web/audio/'+$scope.audio+'.mp3');
         $scope.$watch('wavesurfer.isPlaying()', function() {
             console.log(wavesurfer.isPlaying());
             $scope.playStatus = wavesurfer.isPlaying();

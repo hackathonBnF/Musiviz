@@ -12,8 +12,9 @@ angular.module('musivizApp', [
     'musiviz.discover',
     'musiviz.result',
     'musiviz.search',
-    'musivic.service.record',
-    'musivic.filter.trustAsHtml'
+    'musiviz.service.record',
+    'musiviz.filter.trustAsHtml',
+    'musiviz.filter.seconds'
 ]).
 config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider) {
   $locationProvider.hashPrefix('!');

@@ -1,34 +1,45 @@
 <main class="row bg-color-border">
     <aside class="col-md-3">
-        <div class="bg-color-content">
-            <strong>Ma recherche initiale :</strong>
-            <p>{{ searchQuery }}</p>
+        <div class="bg-color-content row">
+            <div class="col-md-12">
+                <strong>Ma recherche initiale :</strong>
+                <p>{{ searchQuery }}</p>
+            </div>
         </div>
     </aside>
     <section class="col-md-9">
         <div class="bg-color-content row">
             <div class="col-md-12" ng-repeat="record in records">
                 <article class="result-line row">
-                    <div class="col-md-1 text-center" style="padding: 0;">
-                        <div><span title="La couleur du point vous indique le taux de bruit ; la taille du point vous indique le nombre de ressources associées." ng-class="dotColor(record.noise)"><i class="fa fa-circle" ng-class="dotSize(record.associateResources)"></i></span></div>
-                        <div class="align-self-end">
-                            <div class="bg-secondary text-center" style="padding: 2px;"><small title="Durée de la piste">0:03:23</small></div>
-                            <div class="bg-light text-center" style="padding: 2px;"><small title="Nombre de battements par minute">{{ record.bpm }} BPM</small></div>
+                    <div class="bg-light col col-md-1 text-center align-self-end" style="heigth: 100%; padding: 0;">
+                        <div class="bg-light align-self-end">
+                            <div class="bg-light text-center" style="padding: 2px;"><span data-toggle="tooltip" data-placement="top" title="indique le nombre de ressources associées"><i class="fa fa-circle" ng-class="faResources(record.imageCount)"></i></span></div>
+                            <div class="bg-light text-center" style="padding: 2px;"><small data-toggle="tooltip" data-placement="top" title="Date de publication">{{ record.audioRecord.year }}</small></div>
+                            <div class="bg-light text-center" style="padding: 2px;"><small data-toggle="tooltip" data-placement="top" title="Durée de la piste">{{ record.audioMetaData.duration | seconds }}</small></div>
+                            <div class="bg-light text-center" ng-class="colorNoise(record.audioMetaData.noise)" style="padding: 2px;"><span data-toggle="tooltip" data-placement="top" title="Qualité du son"><i class="fa" ng-class="faNoise(record.audioMetaData.noise)"></i></span></div>
+                            <div class="bg-light text-center" style="padding: 2px;"><small data-toggle="tooltip" data-placement="top" title="Nombre de battements par minute">{{ record.audioMetaData.bpm }} BPM</small></div>
+                            <div class="bg-light text-center" style="padding: 2px;">
+                                <button type="button" class="btn btn-primary" ng-click="displayThumbnails(record.audioRecord.id)" ng-if="displayThumbnailsValue !== record.audioRecord.id"><i class="fa fa-plus"></i></button>
+                                <button type="button" class="btn btn-primary" ng-click="displayThumbnails(null)" ng-if="displayThumbnailsValue === record.audioRecord.id"><i class="fa fa-minus"></i></button>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-md-3">
-
+                    <div class="col-md-3 align-self-center">
+                        <img src="{{ record.audioMetaData.urlSpectrum }}" style="max-height: 100px;" />
                     </div>
-                    <div class="col-md-3">
-
+                    <div class="col col-md-3 align-self-center">
+                        <img src="http://gallica.bnf.fr/{{ record.audioRecord.ark }}.thumbnail" />
                     </div>
                     <div class="col-md-5" style="padding: 5px">
-                        <h2 class="result-line-title"><a ui-sref="musiviz.result({id: record.id})">{{ record.title }}</a></h2>
-                        <p><small>{{ record.creators }}</small></p>
+                        <h2 class="result-line-title"><a ui-sref="musiviz.result({id: record.audioRecord.id})">{{ record.audioRecord.title }}</a></h2>
+                        <p><small ng-repeat="creator in record.listCreator"><span ng-if="$index > 0">, </span>{{ creator.name }} {{ creator.date }}</small></p>
                         <div class="align-self-end ml-auto">
-                            <span class="badge badge-pill badge-primary" title="Genre">Musique baroque</span>
+                            <span ng-repeat="genre in record.listGenre"> <span class="badge badge-pill badge-primary" title="Genre">{{ genre.name }}</span></span>
                             <span class="badge badge-pill badge-secondary" title="Institution">BNF</span>
                         </div>
+                    </div>
+                    <div style="padding: 10px;" ng-if="displayThumbnailsValue === record.audioRecord.id">
+                        <span ng-repeat="imageContainer in displayThumbnailsList.listImage | limitTo:20" data-toggle="tooltip" data-placement="top" title="{{ imageContainer.title }}" ><img src="{{ imageContainer.url }}" style="max-height: 40px; display: inline-block;" /></span>
                     </div>
                 </article>
             </div>
