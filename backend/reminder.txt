@@ -1,3 +1,6 @@
+No services... thats ugly.
+But only 24h clock is ticking ! :)
+
 Deploy
 mvn install -Dmaven.test.skip=true
 scp target/backend-0.0.1-SNAPSHOT.jar marc@tuba.hackathon.bnf.fr:

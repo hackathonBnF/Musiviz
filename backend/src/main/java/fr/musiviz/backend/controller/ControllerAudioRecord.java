@@ -1,11 +1,9 @@
 package fr.musiviz.backend.controller;
 
 import fr.musiviz.backend.data.response.ResponseAudioRecord;
+import fr.musiviz.backend.data.response.ResponseImageList;
 import fr.musiviz.backend.db.entity.AudioRecord;
-import fr.musiviz.backend.db.repository.RepoAudioMetaData;
-import fr.musiviz.backend.db.repository.RepoAudioRecord;
-import fr.musiviz.backend.db.repository.RepoCreator;
-import fr.musiviz.backend.db.repository.RepoGenre;
+import fr.musiviz.backend.db.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -34,6 +32,9 @@ public class ControllerAudioRecord {
     @Autowired
     RepoAudioMetaData repoAudioMetaData;
 
+    @Autowired
+    RepoImage repoImage;
+
     @RequestMapping("/all")
     public ResponseEntity<List<ResponseAudioRecord>> allAudioRecord() {
         List<AudioRecord> list = repoAudioRecord.findAll();
@@ -43,6 +44,7 @@ public class ControllerAudioRecord {
                     return mapResponseAudioRecord(ar);
                 })
                 .collect(Collectors.toList());
+
 
         return ResponseEntity.ok(res);
     }
@@ -55,11 +57,15 @@ public class ControllerAudioRecord {
     }
 
     private ResponseAudioRecord mapResponseAudioRecord(AudioRecord audioRecord) {
+        //SALE ! pas le temps
+        int countImage = repoImage.getByAudioRecord(audioRecord).size();
+
         ResponseAudioRecord responseAudioRecord = ResponseAudioRecord.init()
                 .withAudioRecord(audioRecord)
                 .withListCreator(repoCreator.getByAudioRecord(audioRecord))
                 .withListGenre(repoGenre.getByAudioRecord(audioRecord))
-                .withAudioMetaData(repoAudioMetaData.getByAudioRecord(audioRecord));
+                .withAudioMetaData(repoAudioMetaData.getByAudioRecord(audioRecord))
+                .withImageCount(countImage);
 
         return responseAudioRecord;
     }

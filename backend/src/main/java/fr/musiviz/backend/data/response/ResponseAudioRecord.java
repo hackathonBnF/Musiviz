@@ -15,6 +15,7 @@ public class ResponseAudioRecord {
     private List<Creator> listCreator;
     private List<Genre> listGenre;
     private AudioMetaData audioMetaData;
+    private int imageCount;
 
     public static ResponseAudioRecord init() {
         return new ResponseAudioRecord();
@@ -54,6 +55,15 @@ public class ResponseAudioRecord {
 
     public ResponseAudioRecord withAudioMetaData(AudioMetaData audioMetaData) {
         this.audioMetaData = audioMetaData;
+        return this;
+    }
+
+    public int getImageCount() {
+        return imageCount;
+    }
+
+    public ResponseAudioRecord withImageCount(int imageCount) {
+        this.imageCount = imageCount;
         return this;
     }
 }
