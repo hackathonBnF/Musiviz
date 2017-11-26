@@ -60,13 +60,18 @@ public class ControllerAudioRecord {
         //SALE ! pas le temps
         int countImage = repoImage.getByAudioRecord(audioRecord).size();
 
-        ResponseAudioRecord responseAudioRecord = ResponseAudioRecord.init()
-                .withAudioRecord(audioRecord)
-                .withListCreator(repoCreator.getByAudioRecord(audioRecord))
-                .withListGenre(repoGenre.getByAudioRecord(audioRecord))
-                .withAudioMetaData(repoAudioMetaData.getByAudioRecord(audioRecord))
-                .withImageCount(countImage);
-
+        ResponseAudioRecord responseAudioRecord = null;
+        try {
+            responseAudioRecord = ResponseAudioRecord.init()
+                    .withAudioRecord(audioRecord)
+                    .withListCreator(repoCreator.getByAudioRecord(audioRecord))
+                    .withListGenre(repoGenre.getByAudioRecord(audioRecord))
+                    .withAudioMetaData(repoAudioMetaData.getByAudioRecord(audioRecord))
+                    .withImageCount(countImage);
+        } catch (Exception e) {
+            System.err.println("ERROR-- " + e.getMessage());
+            System.err.println("record ark " + audioRecord.getArk());
+        }
         return responseAudioRecord;
     }
 
