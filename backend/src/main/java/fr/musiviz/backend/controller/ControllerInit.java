@@ -2,9 +2,11 @@ package fr.musiviz.backend.controller;
 
 import fr.musiviz.backend.db.entity.AudioRecord;
 import fr.musiviz.backend.db.entity.Creator;
+import fr.musiviz.backend.db.entity.Genre;
 import fr.musiviz.backend.db.entity.Image;
 import fr.musiviz.backend.db.repository.RepoAudioRecord;
 import fr.musiviz.backend.db.repository.RepoCreator;
+import fr.musiviz.backend.db.repository.RepoGenre;
 import fr.musiviz.backend.db.repository.RepoImage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -38,6 +40,9 @@ public class ControllerInit {
 
     @Autowired
     RepoCreator repoCreator;
+
+    @Autowired
+    RepoGenre repoGenre;
 
     @Value("${mv.csv.base}")
     private String csvBase;
@@ -120,7 +125,20 @@ public class ControllerInit {
 
                 });
 
+                //add genre reference
+                Arrays.asList(ar.getSubject().split("\\|")).forEach(c -> {
+
+                    Genre genre = new Genre();
+                    genre.setAudioRecord(ar);
+                    genre.setName(c);
+
+                    repoGenre.save(genre);
+
+                });
+
             });
+
+
 
             System.out.println("Loaded");
         } catch (IOException e) {
