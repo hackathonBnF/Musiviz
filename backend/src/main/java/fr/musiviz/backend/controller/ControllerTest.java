@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -15,6 +14,7 @@ import java.util.List;
  * Created by kemkem on 11/25/17.
  */
 @RestController
+@RequestMapping("/test")
 public class ControllerTest {
 
     @Autowired
@@ -22,13 +22,6 @@ public class ControllerTest {
 
     @RequestMapping("/test")
     public ResponseEntity<String> test() {
-
-        Author a1 = new Author("debussy", "1233");
-        Author a2 = new Author("michel", "1766");
-
-        repoAuthor.save(a1);
-        repoAuthor.save(a2);
-
         return ResponseEntity.ok("hello musiviz");
     }
 
@@ -47,6 +40,5 @@ public class ControllerTest {
 
         return ResponseEntity.ok(list);
     }
-
 
 }
