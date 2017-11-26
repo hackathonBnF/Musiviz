@@ -31,11 +31,11 @@ On peut également avoir une idée du niveau de bruit par la présence diffuse d
                         </dl>
                         <dl>
                             <dt>Auteurs</dt>
-                            <dd><span ng-repeat="creator in record.listCreator"><span ng-if="$index > 0">, </span>{{ creator.name }} <small> {{ creator.date }},  {{ creator.role }}</small></span></dd>
+                            <dd><span ng-repeat="creator in record.listCreator"><span ng-if="$index > 0"><br /></span>{{ creator.name }} <small> {{ creator.date }},  {{ creator.role }}</small></span></dd>
                         </dl>
                         <dl>
                             <dt>Genre</dt>
-                            <dd><span ng-repeat="genre in record.listGenre"><span ng-if="$index > 0">, </span>{{ genre.name }}</span></dd>
+                            <dd><span ng-repeat="genre in record.listGenre"><span ng-if="$index > 0"><br /></span>{{ genre.name }}</span></dd>
                         </dl>
                         <dl>
                             <dt>Droits</dt>
@@ -48,7 +48,7 @@ On peut également avoir une idée du niveau de bruit par la présence diffuse d
                                 <div class="carousel-item"  ng-class="{'active': $index === 0}" ng-repeat="imageContainer in images">
                                     <img class="d-block w-100" src="{{ imageContainer.url }}" alt="{{$index}} slide" />
                                     <div class="carousel-caption d-none d-md-block" ng-if="imageContainer.title != ''">
-                                        <h3><a href="http://gallica.bnf.fr/{{ imageContainer.originArk }}" target="_blank" style="color: #FFF;">{{ imageContainer.title }}</a></h3>
+                                        <h3><a href="http://gallica.bnf.fr/{{ imageContainer.originArk }}" target="_blank" style="color: #FFF; background-color: #0a0a0a; opacity: 0.4;">{{ imageContainer.title }}</a></h3>
                                     </div>
                                 </div>
                             </div>
