@@ -1,13 +1,7 @@
 package fr.musiviz.backend.controller;
 
-import fr.musiviz.backend.db.entity.AudioRecord;
-import fr.musiviz.backend.db.entity.Creator;
-import fr.musiviz.backend.db.entity.Genre;
-import fr.musiviz.backend.db.entity.Image;
-import fr.musiviz.backend.db.repository.RepoAudioRecord;
-import fr.musiviz.backend.db.repository.RepoCreator;
-import fr.musiviz.backend.db.repository.RepoGenre;
-import fr.musiviz.backend.db.repository.RepoImage;
+import fr.musiviz.backend.db.entity.*;
+import fr.musiviz.backend.db.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +15,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -43,6 +39,9 @@ public class ControllerInit {
 
     @Autowired
     RepoGenre repoGenre;
+
+    @Autowired
+    RepoAudioMetaData repoAudioMetaData;
 
     @Value("${mv.csv.base}")
     private String csvBase;
@@ -102,6 +101,7 @@ public class ControllerInit {
             System.out.println("Items to load " + list.size());
 
             list.forEach(ar -> {
+
                 repoAudioRecord.save(ar);
 
                 //add creator reference
@@ -136,6 +136,14 @@ public class ControllerInit {
 
                 });
 
+                //add audio meta
+                AudioMetaData amt = new AudioMetaData();
+                amt.setAudioRecord(ar);
+                amt.setBpm(Integer.toString(ThreadLocalRandom.current().nextInt(50, 150)));
+                amt.setNoise(Integer.toString(ThreadLocalRandom.current().nextInt(15, 99)));
+                amt.setDuration(Integer.toString(ThreadLocalRandom.current().nextInt(80, 400)));
+                amt.setUrlSpectrum("http://www.mp3-tech.org/tests/pm/RefCdAudioS.gif");
+                repoAudioMetaData.save(amt);
             });
 
 

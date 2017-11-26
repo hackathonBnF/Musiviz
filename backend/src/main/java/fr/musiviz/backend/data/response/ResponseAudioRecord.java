@@ -1,5 +1,6 @@
 package fr.musiviz.backend.data.response;
 
+import fr.musiviz.backend.db.entity.AudioMetaData;
 import fr.musiviz.backend.db.entity.AudioRecord;
 import fr.musiviz.backend.db.entity.Creator;
 import fr.musiviz.backend.db.entity.Genre;
@@ -13,6 +14,7 @@ public class ResponseAudioRecord {
     private AudioRecord audioRecord;
     private List<Creator> listCreator;
     private List<Genre> listGenre;
+    private AudioMetaData audioMetaData;
 
     public static ResponseAudioRecord init() {
         return new ResponseAudioRecord();
@@ -43,6 +45,15 @@ public class ResponseAudioRecord {
 
     public ResponseAudioRecord withListGenre(List<Genre> listGenre) {
         this.listGenre = listGenre;
+        return this;
+    }
+
+    public AudioMetaData getAudioMetaData() {
+        return audioMetaData;
+    }
+
+    public ResponseAudioRecord withAudioMetaData(AudioMetaData audioMetaData) {
+        this.audioMetaData = audioMetaData;
         return this;
     }
 }

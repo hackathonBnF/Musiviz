@@ -2,6 +2,7 @@ package fr.musiviz.backend.controller;
 
 import fr.musiviz.backend.data.response.ResponseAudioRecord;
 import fr.musiviz.backend.db.entity.AudioRecord;
+import fr.musiviz.backend.db.repository.RepoAudioMetaData;
 import fr.musiviz.backend.db.repository.RepoAudioRecord;
 import fr.musiviz.backend.db.repository.RepoCreator;
 import fr.musiviz.backend.db.repository.RepoGenre;
@@ -30,6 +31,9 @@ public class ControllerAudioRecord {
     @Autowired
     RepoGenre repoGenre;
 
+    @Autowired
+    RepoAudioMetaData repoAudioMetaData;
+
     @RequestMapping("/all")
     public ResponseEntity<List<ResponseAudioRecord>> allAudioRecord() {
         List<AudioRecord> list = repoAudioRecord.findAll();
@@ -54,7 +58,8 @@ public class ControllerAudioRecord {
         ResponseAudioRecord responseAudioRecord = ResponseAudioRecord.init()
                 .withAudioRecord(audioRecord)
                 .withListCreator(repoCreator.getByAudioRecord(audioRecord))
-                .withListGenre(repoGenre.getByAudioRecord(audioRecord));
+                .withListGenre(repoGenre.getByAudioRecord(audioRecord))
+                .withAudioMetaData(repoAudioMetaData.getByAudioRecord(audioRecord));
 
         return responseAudioRecord;
     }
