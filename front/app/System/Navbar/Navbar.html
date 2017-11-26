@@ -4,8 +4,8 @@
         <img src="web/images/logo-musiviz.png" style="max-height: 25px;" class="img-fluid" />
     </a>
     <form class="form-inline">
-        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" ng-model="searchQuery" />
-        <a class="btn btn-outline-success my-2 my-sm-0" ui-sref="musiviz.search({searchQuery: searchQuery})"><i class="fa fa-search"></i></a>
+        <input class="form-control mr-sm-2" type="search" placeholder="Rechercher" aria-label="Rechercher" ng-model="searchQuery" />
+        <a class="btn my-2 my-sm-0" ng-class="{'btn-outline-primary': searchQuery === '', 'btn-outline-success': searchQuery !== ''}" ui-sref="musiviz.search({searchQuery: searchQuery})"><i class="fa fa-search"></i></a>
     </form>
     <div class="navbar-nav">
         <a class="nav-item nav-link" ui-sref="musiviz.discover">Découvrir</a>
