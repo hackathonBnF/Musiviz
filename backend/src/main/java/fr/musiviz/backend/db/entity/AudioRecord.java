@@ -1,5 +1,7 @@
 package fr.musiviz.backend.db.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 /**
@@ -52,6 +54,7 @@ public class AudioRecord {
         this.year = year;
     }
 
+    @JsonIgnore
     public String getSubject() {
         return subject;
     }
@@ -60,6 +63,7 @@ public class AudioRecord {
         this.subject = subject;
     }
 
+    @JsonIgnore
     public String getCreators() {
         return creators;
     }

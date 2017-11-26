@@ -1,7 +1,10 @@
 package fr.musiviz.backend.controller;
 
+import fr.musiviz.backend.data.response.ResponseAudioRecord;
 import fr.musiviz.backend.db.entity.AudioRecord;
 import fr.musiviz.backend.db.repository.RepoAudioRecord;
+import fr.musiviz.backend.db.repository.RepoCreator;
+import fr.musiviz.backend.db.repository.RepoGenre;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by kemkem on 11/25/17.
@@ -20,17 +24,39 @@ public class ControllerAudioRecord {
     @Autowired
     RepoAudioRecord repoAudioRecord;
 
+    @Autowired
+    RepoCreator repoCreator;
+
+    @Autowired
+    RepoGenre repoGenre;
+
     @RequestMapping("/all")
-    public ResponseEntity<List<AudioRecord>> allAudioRecord() {
+    public ResponseEntity<List<ResponseAudioRecord>> allAudioRecord() {
         List<AudioRecord> list = repoAudioRecord.findAll();
 
-        return ResponseEntity.ok(list);
+        List<ResponseAudioRecord> res = list.stream()
+                .map(ar -> {
+                    return mapResponseAudioRecord(ar);
+                })
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(res);
     }
 
     @RequestMapping(value="/get/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<AudioRecord> getAudioRecord(@PathVariable Long id) {
+    public ResponseEntity<ResponseAudioRecord> getAudioRecord(@PathVariable Long id) {
         AudioRecord audioRecord = repoAudioRecord.findOne(id);
 
-        return ResponseEntity.ok(audioRecord);
+        return ResponseEntity.ok(mapResponseAudioRecord(audioRecord));
     }
+
+    private ResponseAudioRecord mapResponseAudioRecord(AudioRecord audioRecord) {
+        ResponseAudioRecord responseAudioRecord = ResponseAudioRecord.init()
+                .withAudioRecord(audioRecord)
+                .withListCreator(repoCreator.getByAudioRecord(audioRecord))
+                .withListGenre(repoGenre.getByAudioRecord(audioRecord));
+
+        return responseAudioRecord;
+    }
+
 }
