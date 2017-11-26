@@ -61,7 +61,7 @@ public class ControllerInit {
         System.out.println("--- INIT ---");
         //loadDataAudioRecord("audio_record_extract1_100.csv");
         loadDataAudioRecord("audio_record_extract2.csv");
-        loadDataImage("image_extract1_6arks.csv");
+        loadDataImage("image_extract1_6arks_hd.csv");
         loadDataMetaData("metadata_extract2.csv");
 
 //        AudioRecord ar = repoAudioRecord.findOne(new Long(26));
