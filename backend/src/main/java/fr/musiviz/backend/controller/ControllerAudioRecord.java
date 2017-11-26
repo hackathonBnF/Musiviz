@@ -3,7 +3,6 @@ package fr.musiviz.backend.controller;
 import fr.musiviz.backend.db.entity.AudioRecord;
 import fr.musiviz.backend.db.repository.RepoAudioRecord;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,9 +17,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/audiorecord")
 public class ControllerAudioRecord {
-    @Value("${mv.csv.base}")
-    private String csvBase;
-
     @Autowired
     RepoAudioRecord repoAudioRecord;
 
