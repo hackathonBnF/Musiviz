@@ -14,13 +14,25 @@ angular.module('musiviz.result', ['ui.router'])
             resolve: {
                 record: function(RecordService, $transition$) {
                     return RecordService.getRecord($transition$.params().id);
+                },
+                images: function(RecordService, $transition$) {
+                    return RecordService.getByAudioRecord($transition$.params().id);
                 }
             }
         })
     }])
 
-    .controller('AppResultCtrl', ['$rootScope','$scope', '$http', '$sce', '$state', 'record', function($rootScope, $scope, $http, $sce, $state, record) {
+    .controller('AppResultCtrl', ['$rootScope','$scope', '$http', '$sce', '$state', '$timeout', 'record', 'images', function($rootScope, $scope, $http, $sce, $state, $timeout, record, images) {
         $scope.record = record;
+        $scope.mediaContainer = "";
+        $scope.images = images; console.log($scope.images);
+
+        for(var iI in $scope.images.listImage) {
+            $timeout( function() {
+                var imageContainer = $scope.images.listImage[iI];
+                $scope.mediaContainer = "<img src=\""+imageContainer.url+"\" class='img-fluid' style='max-height: 300px;' />";
+            }, 5000);
+        }
 
         var wavesurfer = Object.create(WaveSurfer);
         $scope.wavesurfer = wavesurfer;

@@ -17,7 +17,18 @@ angular.module('musivic.service.record', ['ui.router'])
             },
             getRecord: function(id) {
                 return $http.get(
-                    $rootScope.api+"/audiorecord/get/"+id
+                    $rootScope.api+"audiorecord/get/"+id
+                ).then(function(response) {
+                    console.log(response);
+                    return response.data;
+                }, function errorCallback(response) {
+                    console.log(response);
+                    return response;
+                });
+            },
+            getByAudioRecord: function(id) {
+                return $http.get(
+                    $rootScope.api+"image/getByAudioRecord/"+id
                 ).then(function(response) {
                     console.log(response);
                     return response.data;
