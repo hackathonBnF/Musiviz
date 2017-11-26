@@ -1,5 +1,7 @@
 package fr.musiviz.backend.db.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 /**
@@ -33,6 +35,7 @@ public class Image {
         this.url = url;
     }
 
+    @JsonIgnore
     @ManyToOne
     public AudioRecord getAudioRecord() {
         return audioRecord;
