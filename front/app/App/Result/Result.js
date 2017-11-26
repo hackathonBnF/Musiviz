@@ -25,14 +25,17 @@ angular.module('musiviz.result', ['ui.router'])
     .controller('AppResultCtrl', ['$rootScope','$scope', '$http', '$sce', '$state', '$timeout', 'record', 'images', function($rootScope, $scope, $http, $sce, $state, $timeout, record, images) {
         $scope.record = record;
         $scope.mediaContainer = "";
-        $scope.images = images; console.log($scope.images);
+        $scope.images = images.listImage;
+        $scope.nbResult = images.count;
 
-        for(var iI in $scope.images.listImage) {
-            $timeout( function() {
+        $timeout( function() {
                 var imageContainer = $scope.images.listImage[iI];
                 $scope.mediaContainer = "<img src=\""+imageContainer.url+"\" class='img-fluid' style='max-height: 300px;' />";
             }, 5000);
-        }
+
+        function updateMediaContainer() {
+            $timeout(updateMediaContainer, 5000);
+        };
 
         var wavesurfer = Object.create(WaveSurfer);
         $scope.wavesurfer = wavesurfer;
