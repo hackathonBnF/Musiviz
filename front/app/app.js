@@ -1,14 +1,17 @@
 'use strict';
 
 // Declare app level module which depends on views, and components
-angular.module('myApp', [
-  'ngRoute',
-  'myApp.view1',
-  'myApp.view2',
-  'myApp.version'
+angular.module('musivizApp', [
+    'ui.router',
+    'ngRoute',
+    'ngAnimate',
+    'ngCookies',
+    'musiviz',
+    'musiviz.home',
+    'musiviz.discover',
+    'musiviz.search',
+    'musivic.service.record'
 ]).
 config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider) {
   $locationProvider.hashPrefix('!');
-
-  $routeProvider.otherwise({redirectTo: '/view1'});
 }]);

@@ -1,0 +1,19 @@
+body {
+    background-color: #d1cfc9;
+}
+
+main {
+    margin-top: 50px;
+}
+
+.result-line {
+    background-color: #fff;
+}
+
+.bg-color-content {
+    background-color: #ebebeb;
+}
+
+.result-line-title {
+    font-family: "roboto_condensed";
+}
