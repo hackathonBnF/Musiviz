@@ -1,12 +1,32 @@
 <main class="row bg-color-border">
-    <aside class="col-md-3">
-        <div class="bg-color-content">
-            <strong>Plages :</strong>
-        </div>
-    </aside>
-    <section class="col-md-9">
+    <section class="col-md-12">
         <div class="bg-color-content row">
-            Player
+            <div class="col-md-12">
+                <div>
+                    <button class="btn btn-primary btn-lg" ng-click="wavesurfer.playPause()" style="display: inline-block;">
+                        <i class="fa fa-pause" ng-if="playStatus === true"></i>
+                        <i class="fa fa-play" ng-if="playStatus === false"></i>
+                    </button>
+                    <h1 style="display: inline-block;">{{ record.title | limitTo:20 }}<span ng-if="record.title.length > 20">...</span></h1>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-md-8">
+                        <div id="waveform"></div>
+                        <div id="wave-spectrogram"></div>
+                    </div>
+                    <div class="col-md-4">
+                        <div ng-bind-html="mediaContainer | trustAsHtml"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <h2>Informations</h2>
+                <dl>
+                    <dt>Titre</dt>
+                    <dd>{{record.title}}</dd>
+                </dl>
+            </div>
         </div>
     </section>
 </main>
