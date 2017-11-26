@@ -6,7 +6,23 @@
     </aside>
     <section class="col-md-9">
         <div class="bg-color-content row">
-            Player
+            <div class="col-md-12">
+                <h1>{{ record.title }}</h1>
+                <br />
+                <div class="row">
+                    <div class="col-md-12">
+                        <div id="waveform"></div>
+                        <div id="wave-spectrogram"></div>
+                        <div style="text-align: center">
+                            <button class="btn btn-primary" ng-click="wavesurfer.playPause()">
+                                <i class="fa fa-pause" ng-if="playStatus === true"></i>
+                                <i class="fa fa-play" ng-if="playStatus === false"></i>
+                                Play
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 </main>

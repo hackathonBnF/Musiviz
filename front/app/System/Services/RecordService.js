@@ -6,18 +6,20 @@ angular.module('musivic.service.record', ['ui.router'])
         return {
             getRecords: function() {
                 return $http.get(
-                    $rootScope.api+"/"
+                    $rootScope.api+"audiorecord/all"
                 ).then(function(response) {
+                    console.log(response);
                     return response.data;
                 }, function errorCallback(response) {
                     console.log(response);
                     return response;
                 });
             },
-            getRecord: function() {
+            getRecord: function(id) {
                 return $http.get(
-                    $rootScope.api+"/"
+                    $rootScope.api+"/audiorecord/get/"+id
                 ).then(function(response) {
+                    console.log(response);
                     return response.data;
                 }, function errorCallback(response) {
                     console.log(response);
